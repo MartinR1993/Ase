@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 
 
-public class connector {
+public class ConnectorVaegt {
 	public static void main(String[] args) {
 
 
