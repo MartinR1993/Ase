@@ -1,45 +1,34 @@
 package connector;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.net.SocketAddress;
+import java.util.Scanner;
 
 
-/** @author Ronnie Dalsgaard */
 public class connector {
-	private final String HOST     = "ec2-52-30-89-247.eu-west-1.compute.amazonaws.com";
-	private final int    PORT     = 3306;
-	private final String DATABASE = "grp19";
-	private final String USERNAME = "grp19"; 
-	private final String PASSWORD = "hS#Vk94G";
-	private Connection connection;
-
-	public connector() {
+	public static void main(String[] args) {
+		
+	
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE;
-			connection = DriverManager.getConnection(url, USERNAME, PASSWORD);
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-			System.exit(1);
-		}
-	}
+			Socket socket = new Socket("localhost", 8000);
+			DataOutputStream os = new DataOutputStream(socket.getOutputStream());
+			DataInputStream is = new DataInputStream(socket.getInputStream());
 
-	public Connection getConnection(){
-		return connection;
-	}
+			BufferedReader scan = new BufferedReader (new InputStreamReader(System.in));
+			
+//			os.writeBytes(scan.readLine()+ "\r\n");
+			os.writeBytes("B 200\r\n");
+			os.writeBytes("Q\r\n");
 
-	public ResultSet doQuery(String query) throws SQLException{
-		Statement stmt = connection.createStatement();
-		ResultSet res = stmt.executeQuery(query);
-		return res;
+			
+		} catch (Exception e) {
+			System.err.println("Exception:  " + e);
+	} 
 	}
-
-	public void doUpdate(String query) throws SQLException{
-		Statement stmt = connection.createStatement();
-		stmt.executeUpdate(query);
-	}
-	   
 }
