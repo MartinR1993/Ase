@@ -36,7 +36,6 @@ public class ConnectorVaegt {
 					boolean run = true;
 					
 					DataOutputStream os = new DataOutputStream(socket.getOutputStream());
-//					DataInputStream is = new DataInputStream(socket.getInputStream());
 					BufferedReader scan = new BufferedReader (new InputStreamReader(System.in));
 
 					while (run) {
